@@ -2,6 +2,8 @@
 using namespace std;
 
 int ways(int i, int j, vector<vector<int>>& points, vector<vector<int>>& dp) {
+    if(i>=0 && j>=0 && points[i][j]==-1) return 0;
+
     if(i==0 && j==0) {
         return 1;
     }
@@ -13,7 +15,7 @@ int ways(int i, int j, vector<vector<int>>& points, vector<vector<int>>& dp) {
     }
 
     return dp[i][j] = (ways(i-1, j, points, dp) +
-    ways(i-1, j-1, points, dp));
+    ways(i, j-1, points, dp));
 }
 
 int ninjaTraining(int i, vector<vector<int>> points) {
@@ -23,8 +25,8 @@ int ninjaTraining(int i, vector<vector<int>> points) {
 
 int main() {
     vector<vector<int>> points = {
-        {1},
-        {2, 5},
+        {1, 4, 7},
+        {2, -1, 8},
         {3, 6, 9}
     };
     int n = points.size();
