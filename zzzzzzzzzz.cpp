@@ -1,35 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int ways(int i, int j, vector<vector<int>>& points, vector<vector<int>>& dp) {
-    if(i==0 && j==0) {
-        return 1;
+bool subsetSumUtil(int ind, int target, vector<int>& arr, vector<vector<int>>& dp) {
+    // Base cases
+    if(target == 0) return true;
+    if(ind == 0) return arr[0] == target;
+    
+    // Check if already computed
+    if(dp[ind][target] != -1) return dp[ind][target];
+    
+    // Not take current element
+    bool notTake = subsetSumUtil(ind - 1, target, arr, dp);
+    
+    // Take current element (if possible)
+    bool take = false;
+    if(arr[ind] <= target) {
+        take = subsetSumUtil(ind - 1, target - arr[ind], arr, dp);
     }
-
-    if(i<0 || j<0) return 0;
-
-    if(dp[i][j] != -1) {
-        return dp[i][j];
-    }
-
-    return dp[i][j] = (ways(i-1, j, points, dp) +
-    ways(i-1, j-1, points, dp));
+    
+    return dp[ind][target] = notTake || take;
 }
 
-int ninjaTraining(int i, vector<vector<int>> points) {
-    vector<vector<int>> dp(i, vector<int> (i, -1));
-    return ways(i-1, i-1, points, dp);
+bool isSubsetSum(vector<int>& arr, int target) {
+    int n = arr.size();
+    vector<vector<int>> dp(n, vector<int>(target + 1, -1));
+    return subsetSumUtil(n - 1, target, arr, dp);
 }
 
 int main() {
-    vector<vector<int>> points = {
-        {1},
-        {2, 5},
-        {3, 6, 9}
-    };
-    int n = points.size();
+    vector<int> arr = {2, 3, 7, 8, 10};
+    int target = 11;
     
-    cout << ninjaTraining(n, points) << endl;  // Output: 210
-    
+    if(isSubsetSum(arr, target)) {
+        cout << "Subset with sum " << target << " exists!" << endl;
+    } else {
+        cout << "No subset with sum " << target << " exists!" << endl;
+    }
     return 0;
 }
