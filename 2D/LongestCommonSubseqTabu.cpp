@@ -17,10 +17,9 @@ public:
     }
 };
 
-// Driver code
 int main() {
     Solution sol;
-    string s1 = "abcde", s2 = "ace";
-    cout << "LCS Length: " << sol.longestCommonSubsequence(s1, s2) << endl; // Output: 3
+    string s1 = "abcde", s2 = "abce";
+    cout << "LCS Length: " << sol.longestCommonSubsequence(s1, s2) << endl;
     return 0;
 }
