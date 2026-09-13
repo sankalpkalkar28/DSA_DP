@@ -3,7 +3,7 @@ using namespace std;
 
 int main() {
 
-    vector<int> coins = {1, 2, 5};
+    vector<int> coins = {1, 2, 4, 5};
     int amount = 5;
 
     int n = coins.size();
